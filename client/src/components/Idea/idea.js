@@ -28,7 +28,7 @@ const Idea = () => {
 
   const { id } = useParams();
   const url = "/ideaEdit/";
-  const { idea_id } = useParams();
+  // const { idea_id } = useParams();
   const handleComment = async (e) => {
     e.preventDefault();
     try {
@@ -37,7 +37,7 @@ const Idea = () => {
         url: "/api/comment/post-comment",
         headers: authHeader(),
         data: {
-          idea_id: idea_id,
+          idea_id: id,
           feature_id: null,
           content: content,
         },
