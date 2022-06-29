@@ -38,6 +38,7 @@ const Feature = () => {
 
       if (res.status === 200) {
         console.log("comment sucessfully");
+        setContent("");
         reloadpage();
       } else {
         console.log("some error occured");
@@ -191,7 +192,7 @@ const Feature = () => {
             <div></div>
           )}
         </div>
-        <div className="row">
+        <div className="row mt-10">
           <div className="col-6">
             <Comment comments={comments} />
           </div>
@@ -208,7 +209,7 @@ const Feature = () => {
                 />
               </div>
             </div>
-            <div className="row">
+            <div className="row mt-6">
               <div className="flex justify-center">
                 <button
                   type="submit"
