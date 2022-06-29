@@ -24,6 +24,14 @@ const EditProfile = () => {
     setFile(e.target.files[0]);
   };
 
+  var win_width = window.innerWidth;
+  var style_width;
+  if (win_width < 500) {
+    style_width = "90%";
+  } else {
+    style_width = "60%";
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -66,13 +74,13 @@ const EditProfile = () => {
   return (
     <div>
       <h1 className="mb-3 mt-3" style={{ color: "white", fontSize: "1.6rem" }}>
-        ! Edit Your Profile So You Can Satnd Out In The Crowd !
+        ! Edit Your Profile So You Can Stand Out In The Crowd !
       </h1>
       <div
         className=" m-auto container formsize"
         style={{
           backgroundColor: "#b6aaf3",
-          width: "60%",
+          width: style_width,
           borderRadius: "20px",
         }}
       >
