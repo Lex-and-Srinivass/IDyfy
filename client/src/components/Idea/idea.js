@@ -9,6 +9,8 @@ import Footer from "../Footer/footer";
 import { Link } from "react-router-dom";
 import Loader from "../Loader/loader";
 import { toast } from "react-toastify";
+import Comment from "../../components/comment/comment";
+
 const Idea = () => {
   const notify5 = () => toast.success("Idea Liked!");
   const notify6 = () => toast.success("Idea Unliked!");
@@ -21,9 +23,41 @@ const Idea = () => {
   const [canEdit, setCanEdit] = useState(false);
   const [isLiked, setActiveliked] = useState();
   var [likes_count, setLikesCount] = useState();
+  const [content, setContent] = useState("");
+  const [load2, setLoad2] = useState(false);
 
   const { id } = useParams();
   const url = "/ideaEdit/";
+  // const { idea_id } = useParams();
+  const handleComment = async (e) => {
+    e.preventDefault();
+    try {
+      let res = await axios({
+        method: "POST",
+        url: "/api/comment/post-comment",
+        headers: authHeader(),
+        data: {
+          idea_id: id,
+          feature_id: null,
+          content: content,
+        },
+      });
+
+      if (res.status === 200) {
+        console.log("comment sucessfully");
+        setContent("");
+        reloadpage();
+      } else {
+        console.log("some error occured");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const reloadpage = () => {
+    setLoad2(!load2);
+  };
 
   const fetchIdea = () => {
     axios
@@ -45,6 +79,10 @@ const Idea = () => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    fetchIdea();
+  }, [load2]);
 
   useEffect(() => {
     fetchIdea();
@@ -305,6 +343,36 @@ const Idea = () => {
         ) : (
           <div></div>
         )}
+        <div className="mt-10 row">
+          <div className="col-6">
+            <Comment comments={comments} />
+          </div>
+
+          <div className="col-6">
+            <div className="row">
+              <div className="flex justify-center mt-3 mx-3">
+                <input
+                  type="text"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="form-control form_box"
+                  placeholder="Enter Comment"
+                />
+              </div>
+            </div>
+            <div className="mt-6 row">
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  onClick={handleComment}
+                  className="mr-2 h-10 mb-10 btn button"
+                >
+                  Add Comment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
