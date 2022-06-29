@@ -18,6 +18,11 @@ const EditProfile = () => {
   const [about, setAbout] = useState(loc.state.user.about);
   const [job, setJob] = useState(loc.state.user.job);
   const [university, setUniversity] = useState(loc.state.user.university);
+  const [file, setFile] = useState();
+
+  const saveFile = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,17 +32,19 @@ const EditProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("name", name);
+    formData.append("about", about);
+    formData.append("job", job);
+    formData.append("university", university);
+
     try {
       let res = await axios({
         method: "PUT",
         url: "/api/profile/update-profile",
         headers: authHeader(),
-        data: {
-          name,
-          about,
-          university,
-          job,
-        },
+        data: formData,
       });
 
       if (res.status === 200) {
@@ -131,7 +138,9 @@ const EditProfile = () => {
               />
             </div>
 
-            <div className="flex justify-start mt-3 mx-3"></div>
+            <div className="flex justify-start mt-3 mx-3">
+              <input class="form-control" type="file" onChange={saveFile} />
+            </div>
 
             <div className="flex justify-center">
               <button type="submit" className="mr-2 h-10 mb-10 btn button">
