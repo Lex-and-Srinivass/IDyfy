@@ -10,6 +10,9 @@ exports.update_idea = async (req, res, next) => {
     const { title, description, tags, links, idea_id } = req.body;
     var idea = await Idea.findById(idea_id);
     var user_id = req.user._id.toString();
+    if (!idea) {
+      return next(new ErrorResponse("Idea not found!", 404));
+    }
     if (idea.contributors.includes(user_id)) {
       console.log(req.files);
       var files = req.files;
@@ -84,14 +87,14 @@ exports.update_idea = async (req, res, next) => {
         engagement_score,
       });
 
-      var user = await User.findByIdAndUpdate(req.user._id,{
-        $push:  {
+      var user = await User.findByIdAndUpdate(req.user._id, {
+        $push: {
           events: {
             type: "idea updated",
             detail: idea,
-            time: new Date()
-          }
-        }
+            time: new Date(),
+          },
+        },
       });
 
       res.status(200).json({

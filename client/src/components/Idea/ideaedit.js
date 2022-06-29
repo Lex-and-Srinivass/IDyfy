@@ -8,6 +8,7 @@ import axios from "axios";
 import authHeader from "../../services/auth-header";
 import { useLocation } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
+import { useHistory } from "react-router-dom";
 
 const EditIdea = () => {
   const loc = useLocation();
@@ -16,6 +17,7 @@ const EditIdea = () => {
   const [title, setTitle] = useState(loc.state.idea.title);
   const [id, setId] = useState(loc.state.idea._id);
   const [description, setDescription] = useState(loc.state.idea.description);
+  const history = useHistory();
 
   var win_width = window.innerWidth;
   var style_width;
@@ -79,6 +81,7 @@ const EditIdea = () => {
     formData.append("description", description);
     formData.append("tags", tags);
     formData.append("links", links);
+    formData.append("idea_id", id);
     try {
       let res = await axios({
         method: "PUT",
@@ -92,6 +95,7 @@ const EditIdea = () => {
         setDescription("");
         setTags([]);
         console.log("idea updated sucessfully");
+        history.push(`/idea/${id}`);
       } else {
         console.log("some error occured");
       }
