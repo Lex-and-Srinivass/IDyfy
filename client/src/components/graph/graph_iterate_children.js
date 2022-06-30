@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./lib/treestyle.css";
+import { toast } from "react-toastify";
+
+import axios from "axios";
+import authHeader from "../../services/auth-header";
 const Graph_iterate_children = (props) => {
   let TreeData = props.tree,
     cardkey = "",
     Edit = props.Edit,
-    //   strokeWidth = "5px",
-    //   strokeColor = "#000000",
+    // strokeWidth = "",
+    strokeColor = "",
     _id = props._id;
-
+  let Version = props.version;
   const handleClick = (item) => {
     console.log(item);
     if (item.show == "nothing") {
@@ -16,6 +20,19 @@ const Graph_iterate_children = (props) => {
       // console.log("ew");
       localStorage.setItem("idea", JSON.stringify(TreeData));
     }
+  };
+
+  const DeleteFeature = async (id, pid) => {
+    await axios
+      .get(`/api/feature/delete-feature?idea_id=${TreeData[0]._id}&id=${id}`, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        if (res.data.success == true) {
+          toast.success("Deleted " + res.data.deleted_feature.title);
+          props.Clicked(pid);
+        }
+      });
   };
   return (
     // <div className="tree__container__step">
@@ -28,10 +45,17 @@ const Graph_iterate_children = (props) => {
                 className="tree__container__step__card dropdown"
                 id={item._id}
               >
-                {/* {(cardkey = "card_" + item.id)} */}
+                {/* no change */}
+                {item.updated == 0 && (strokeColor = "")}
+                {/* updated feature */}
+                {item.updated == 1 &&
+                  (strokeColor = "border border-5 border-warning")}
+                {/* new feature */}
+                {item.updated == 2 &&
+                  (strokeColor = "border border-5 border-success")}
+
                 <p
-                  // id={cardkey}
-                  className="tree__container__step__card__p"
+                  className={`tree__container__step__card__p +${strokeColor}`}
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
@@ -84,7 +108,18 @@ const Graph_iterate_children = (props) => {
                             Add Sibling
                           </Link>
                         </li>
-                        <li className="dropdown-item">Delete feature</li>
+                        {item.leaf ? (
+                          <li
+                            className="dropdown-item"
+                            onClick={() => {
+                              DeleteFeature(item._id, item.parent_id);
+                            }}
+                          >
+                            Delete feature
+                          </li>
+                        ) : (
+                          <></>
+                        )}{" "}
                       </>
                     ) : (
                       <></>
