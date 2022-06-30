@@ -53,6 +53,8 @@ const Graph_iterate_children = (props) => {
                 {/* new feature */}
                 {item.updated == 2 &&
                   (strokeColor = "border border-5 border-success")}
+                {item.updated == 3 &&
+                  (strokeColor = "border border-5 border-danger")}
 
                 <p
                   className={`tree__container__step__card__p +${strokeColor}`}

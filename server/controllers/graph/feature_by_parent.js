@@ -15,6 +15,10 @@ exports.fetch_features_by_parent = async (req, res, next) => {
     obj7 = { canEdit: "cannot pull" };
     obj8 = { leaf: true };
     obj9 = { leaf: false };
+    obj10 = { updated: 0 };
+    obj11 = { updated: 1 };
+    obj12 = { updated: 2 };
+    obj13 = { updated: 3 };
 
     var user;
     if (whosegraph == "null" || whosegraph == undefined) {
@@ -197,6 +201,8 @@ exports.fetch_features_by_parent = async (req, res, next) => {
             version_end: 1,
             available: 1,
             updated_feature: 1,
+            updated_version: 1,
+            deleted_version: 1,
             // user_id: 1,
           }
         );
@@ -220,6 +226,8 @@ exports.fetch_features_by_parent = async (req, res, next) => {
             version_end: 1,
             available: 1,
             updated_feature: 1,
+            updated_version: 1,
+            deleted_version: 1,
             // user_id: 1,
           }
         );
@@ -236,6 +244,13 @@ exports.fetch_features_by_parent = async (req, res, next) => {
       }
 
       var array = [];
+      var latest_version;
+      var user_id = req.user._id.toString();
+      const idea = await Idea.findById(idea_id);
+      // console.log(idea);
+      if (idea) {
+        latest_version = parseInt(idea.ideas_details[user_id]);
+      }
 
       for await (const feature of results) {
         // console.log(feature);
@@ -275,7 +290,35 @@ exports.fetch_features_by_parent = async (req, res, next) => {
           result = { ...result, ...obj9 };
         }
 
-        // console.log(result);
+        if (result.version_end == 0) {
+          result = { ...result, ...obj12 };
+        } else if (version != 0 && result.version_start == version) {
+          result = { ...result, ...obj12 };
+        } else if (
+          result.updated_version &&
+          result.updated_version == version
+        ) {
+          result = { ...result, ...obj11 };
+        } else if (
+          result.updated_version &&
+          version == 0 &&
+          result.updated_version == latest_version + 1
+        ) {
+          result = { ...result, ...obj11 };
+        } else if (
+          result.deleted_version &&
+          result.deleted_version == version
+        ) {
+          result = { ...result, ...obj13 };
+        } else if (
+          result.deleted_version &&
+          version == 0 &&
+          result.deleted_version == latest_version + 1
+        ) {
+          result = { ...result, ...obj13 };
+        } else result = { ...result, ...obj10 };
+
+        console.log(result);
 
         // if (
         //   req.user._id.toString() == feature.user_id &&
