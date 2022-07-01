@@ -27,7 +27,7 @@ const Graph = (props) => {
             "idea",
             JSON.stringify([...TreeData, ...res.data.features])
           );
-          console.log([...TreeData, ...res.data.features]);
+          // console.log([...TreeData, ...res.data.features]);
         },
         (err) => {
           console.log(err);
@@ -36,7 +36,7 @@ const Graph = (props) => {
   };
 
   const Clicked = (p) => {
-    console.log("Clicked on item " + p);
+    // console.log("Clicked on item " + p);
     TreeData.map((item) => {
       if (item._id == p) {
         if (item.show === false) {
@@ -84,7 +84,7 @@ const Graph = (props) => {
     if (TreeData) {
       if (TreeData[0].show == "nothing") {
         TreeData[0].show = false;
-        console.log("ew");
+
         localStorage.setItem("idea", JSON.stringify(TreeData));
       }
     }
@@ -125,7 +125,7 @@ const Graph = (props) => {
     let svg = document.getElementById("tree__svg-container__svg");
     // console.log(TreeData);
     generatepath();
-    console.log(allLinks);
+    // console.log(allLinks);
     svg.innerHTML = "";
     for (let i = 0; allLinks.length > i; i++) {
       path();

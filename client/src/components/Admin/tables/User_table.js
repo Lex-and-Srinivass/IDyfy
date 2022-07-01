@@ -56,7 +56,7 @@ const User_table = () => {
           headers: authHeader(),
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           notify1();
           //console.log(res.data);
         })
@@ -67,7 +67,7 @@ const User_table = () => {
           headers: authHeader(),
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           notify2();
           //console.log(res.data);
         })
@@ -112,7 +112,7 @@ const User_table = () => {
     fetchIdea();
   }, []);
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <div>

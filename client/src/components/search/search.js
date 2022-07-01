@@ -45,7 +45,7 @@ const Search = () => {
             setResultName(res.data.search_by_title);
             setResultPeople(res.data.search_user);
             setResultSimilarIdeas(res.data.similar_ideas);
-            console.log(res);
+            // console.log(res);
           },
           (err) => {
             console.log(err);
@@ -70,7 +70,7 @@ const Search = () => {
           (res) => {
             setResultPeople();
             // setskip(skip + 5);
-            console.log(res);
+            // console.log(res);
           },
           (err) => {
             console.log(err);
@@ -95,7 +95,7 @@ const Search = () => {
           (res) => {
             setResultTag();
             // setskip1(skip1 + 5);
-            console.log(res);
+            // console.log(res);
           },
           (err) => {
             console.log(err);
@@ -118,7 +118,7 @@ const Search = () => {
           })
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify1();
             },
             (err) => {
@@ -139,7 +139,7 @@ const Search = () => {
           })
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify2();
             },
             (err) => {
@@ -168,7 +168,7 @@ const Search = () => {
           (res) => {
             setResultName();
             // setskip2(skip2 + 5);
-            console.log(res);
+            // console.log(res);
           },
           (err) => {
             console.log(err);
@@ -281,7 +281,7 @@ const Search = () => {
               >
                 IDEA TITLE
               </span>
-              {console.log("Here")}
+              {/* {console.log("Here")} */}
               {resultName ? (
                 resultName.length == 0 ? (
                   <span>
@@ -407,7 +407,7 @@ const Search = () => {
             >
               IDEA TAG
             </span>
-            {console.log("Here")}
+            {/* {console.log("Here")} */}
             {resultTag ? (
               resultName.length == 0 ? (
                 <span>
@@ -678,7 +678,7 @@ const Search = () => {
             >
               SIMILAR IDEAS
             </span>
-            {console.log("Here")}
+            {/* {console.log("Here")} */}
             {similarIdeas ? (
               resultName.length == 0 ? (
                 <span>

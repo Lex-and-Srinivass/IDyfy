@@ -50,7 +50,7 @@ const CreateIdea = () => {
         setDescription("");
         setTags([]);
         //tags not going from the field but anyways we are redirecting to idea page so no issues
-        console.log("idea created sucessfully");
+        // console.log("idea created sucessfully");
         history.push("/idea/" + res.data.idea._id.toString());
       } else {
         console.log("some error occured");

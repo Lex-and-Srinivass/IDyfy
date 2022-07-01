@@ -61,7 +61,7 @@ const EditProfile = () => {
         setAbout("");
         setJob("");
         setUniversity("");
-        console.log("Profile updated sucessfully");
+        // console.log("Profile updated sucessfully");
         history.push("/profile");
       } else {
         console.log("some error occured");

@@ -22,7 +22,7 @@ const Notification = () => {
             //setIdeas(res.data.ideas);
             //setUsers_liked(res.data.liked_users);
             setEvents(res.data.events[0].events);
-            console.log(res.data.events[0].events);
+            // console.log(res.data.events[0].events);
           },
           (err) => {
             console.log(err);

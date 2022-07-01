@@ -94,7 +94,7 @@ const EditIdea = () => {
         setTitle("");
         setDescription("");
         setTags([]);
-        console.log("idea updated sucessfully");
+        // console.log("idea updated sucessfully");
         history.push(`/idea/${id}`);
       } else {
         console.log("some error occured");
@@ -109,7 +109,7 @@ const EditIdea = () => {
       <h1 className="mb-3 mt-3" style={{ color: "white", fontSize: "1.6rem" }}>
         ! Edit Your Idea To Make It More Brilliant !
       </h1>
-      {console.log(win_width)}
+      {/* {console.log(win_width)} */}
       <div
         className=" m-auto container formsize"
         style={{

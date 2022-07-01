@@ -33,7 +33,7 @@ const Graph_body = () => {
       })
       .then(
         (res) => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.success == true) {
             notify2();
           } else {
@@ -79,7 +79,7 @@ const Graph_body = () => {
           SetWhosegraph(res.data.highest_contributor._id);
           SetContributers(res.data.contributor_names);
           SetHeighest(res.data.highest_contributor);
-          console.log(res.data);
+          // console.log(res.data);
           res.data.contributor_names.map((contri, idx) => {
             if (contri._id == res.data.id) {
               // Whosegraph = res.data.id;
@@ -106,6 +106,7 @@ const Graph_body = () => {
       )
       .then(
         (res) => {
+          // console.log(res.data);
           SetMaxVersion(res.data.latest_version);
         },
         (err) => {

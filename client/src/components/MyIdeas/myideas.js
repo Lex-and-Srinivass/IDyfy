@@ -17,7 +17,7 @@ const MyIdeas = () => {
         .then(
           (res) => {
             setIdeas(res.data.ideas);
-            console.log(res);
+            // console.log(res);
           },
           (err) => {
             console.log(err);

@@ -44,7 +44,7 @@ const Idea = () => {
       });
 
       if (res.status === 200) {
-        console.log("comment sucessfully");
+        // console.log("comment sucessfully");
         setContent("");
         reloadpage();
       } else {
@@ -71,7 +71,7 @@ const Idea = () => {
         setCanEdit(res.data.can_edit);
         setActiveliked(res.data.idea.liked);
         setLikesCount(res.data.idea.liked_users.length);
-        console.log(res.data);
+        // console.log(res.data);
         setLoad(false);
       })
       .catch((err) => {
@@ -108,7 +108,7 @@ const Idea = () => {
           })
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify5();
             },
             (err) => {
@@ -129,7 +129,7 @@ const Idea = () => {
           })
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify6();
             },
             (err) => {
@@ -145,7 +145,7 @@ const Idea = () => {
 
   return (
     <div>
-      {console.log(contributors)}
+      {/* {console.log(contributors)} */}
       <div className="relative flex justify-center">
         <div
           className="absolute top-1/3 sm:text-xl md:text-4xl lg:text-6xl"
