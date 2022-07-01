@@ -60,7 +60,7 @@ const EditFeature = () => {
         setDescription("");
         console.log("feature updated sucessfully");
         //change path according to feaure id later
-        history.push("/feature");
+        history.push(`/feature/${idea_id}/${id}`);
       } else {
         console.log("some error occured");
       }

@@ -254,6 +254,9 @@ exports.fetch_features_by_parent = async (req, res, next) => {
 
       for await (const feature of results) {
         // console.log(feature);
+        if (version == 0 && feature.available == undefined) {
+          continue;
+        }
         if (version == "null" || version == undefined || version == 0) {
           var test = await Feature.find(
             {
@@ -290,14 +293,7 @@ exports.fetch_features_by_parent = async (req, res, next) => {
           result = { ...result, ...obj9 };
         }
 
-        if (result.version_end == 0) {
-          result = { ...result, ...obj12 };
-        } else if (version != 0 && result.version_start == version) {
-          result = { ...result, ...obj12 };
-        } else if (
-          result.updated_version &&
-          result.updated_version == version
-        ) {
+        if (result.updated_version && result.updated_version == version) {
           result = { ...result, ...obj11 };
         } else if (
           result.updated_version &&
@@ -316,6 +312,10 @@ exports.fetch_features_by_parent = async (req, res, next) => {
           result.deleted_version == latest_version + 1
         ) {
           result = { ...result, ...obj13 };
+        } else if (result.version_end == 0) {
+          result = { ...result, ...obj12 };
+        } else if (version != 0 && result.version_start == version) {
+          result = { ...result, ...obj12 };
         } else result = { ...result, ...obj10 };
 
         console.log(result);
