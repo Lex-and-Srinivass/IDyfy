@@ -34,6 +34,32 @@ const Graph_Iterate_root = (props) => {
         }
       });
   };
+
+  const color = (item) => {
+    {
+      /* no change */
+    }
+    {
+      item.updated == 0 && (strokeColor = "");
+    }
+    {
+      /* updated feature */
+    }
+    {
+      item.updated == 1 && (strokeColor = "border border-5 border-warning");
+    }
+    {
+      /* new feature */
+    }
+    {
+      item.updated == 2 && (strokeColor = "border border-5 border-success");
+    }
+    {
+      item.updated == 3 && (strokeColor = "border border-5 border-danger");
+    }
+
+    return strokeColor;
+  };
   return (
     // <div className="tree__container__step">
     <>
@@ -42,18 +68,8 @@ const Graph_Iterate_root = (props) => {
         item.parent_id == _id ? (
           <div className="tree__container__step" key={"div" + key}>
             <div className="tree__container__step__card dropdown" id={item._id}>
-              {/* no change */}
-              {item.updated == 0 && (strokeColor = "")}
-              {/* updated feature */}
-              {item.updated == 1 &&
-                (strokeColor = "border border-5 border-warning")}
-              {/* new feature */}
-              {item.updated == 2 &&
-                (strokeColor = "border border-5 border-success")}
-              {item.updated == 3 &&
-                (strokeColor = "border border-5 border-danger")}
               <p
-                className={`tree__container__step__card__p +${strokeColor}`}
+                className={`tree__container__step__card__p +${color(item)}`}
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
