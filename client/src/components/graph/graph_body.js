@@ -14,7 +14,7 @@ const Graph_body = () => {
   const [Edit, SetEdit] = useState(true);
   const [Contributers, SetContributers] = useState();
   const [Heighest, SetHeighest] = useState();
-  const [canPull, SetcanPull] = useState(false);
+  const [canPull, SetcanPull] = useState(true);
   const { idea_id } = useParams();
   const canIEdit = (a) => {
     SetEdit(a);
