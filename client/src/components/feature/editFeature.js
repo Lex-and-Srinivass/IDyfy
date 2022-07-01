@@ -25,6 +25,14 @@ const EditFeature = () => {
 
   const history = useHistory();
 
+  var win_width = window.innerWidth;
+  var style_width;
+  if (win_width < 500) {
+    style_width = "90%";
+  } else {
+    style_width = "60%";
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -127,7 +135,7 @@ const EditFeature = () => {
                 // value={description},
                 init={{
                   height: 300,
-                  width: 1000,
+                  width: "100%",
                   menubar: true,
                   // setContent: "<strong>Some contents</strong>",
                   plugins: [
