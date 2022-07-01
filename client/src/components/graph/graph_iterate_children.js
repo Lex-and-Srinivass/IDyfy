@@ -167,6 +167,7 @@ const Graph_iterate_children = (props) => {
               <Graph_iterate_children
                 tree={TreeData}
                 _id={item._id}
+                Edit={Edit}
                 Clicked={props.Clicked}
               />
             </div>
