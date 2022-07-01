@@ -123,6 +123,16 @@ exports.update_feature = async (req, res, next) => {
         }
       );
       prev_feature = await Feature.findById(id);
+
+      var updation_of_children = await Feature.updateMany(
+        {
+          parent_id: prev_feature._id,
+        },
+        {
+          parent_id: response._id.toString(),
+        }
+      );
+
       if (req.user.engagement_score == null) {
         var engagement_score = 0.1;
       } else {
@@ -141,14 +151,14 @@ exports.update_feature = async (req, res, next) => {
         user_scores,
       });
 
-      var user = await User.findByIdAndUpdate(req.user._id,{
-        $push:  {
+      var user = await User.findByIdAndUpdate(req.user._id, {
+        $push: {
           events: {
             type: "feature updated",
             detail: response,
-            time: new Date()
-          }
-        }
+            time: new Date(),
+          },
+        },
       });
 
       res.status(200).json({

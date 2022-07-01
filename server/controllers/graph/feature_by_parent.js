@@ -257,6 +257,11 @@ exports.fetch_features_by_parent = async (req, res, next) => {
         if (version == 0 && feature.available == undefined) {
           continue;
         }
+        if (
+          feature.updated_version == version &&
+          (!feature.available || feature.available == null)
+        )
+          continue;
         if (version == "null" || version == undefined || version == 0) {
           var test = await Feature.find(
             {
