@@ -8,6 +8,7 @@ import authHeader from "../../services/auth-header";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader from "../Loader/loader";
 
 const EditProfile = () => {
   const loc = useLocation();
@@ -19,6 +20,8 @@ const EditProfile = () => {
   const [job, setJob] = useState(loc.state.user.job);
   const [university, setUniversity] = useState(loc.state.user.university);
   const [file, setFile] = useState();
+  const [upload, setUpload] = useState(false);
+  const [load, setLoad] = useState(false);
 
   const saveFile = (e) => {
     setFile(e.target.files[0]);
@@ -40,6 +43,8 @@ const EditProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoad(true);
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("name", name);
@@ -62,6 +67,7 @@ const EditProfile = () => {
         setJob("");
         setUniversity("");
         // console.log("Profile updated sucessfully");
+        setLoad(false);
         history.push("/profile");
       } else {
         console.log("some error occured");
@@ -70,6 +76,15 @@ const EditProfile = () => {
       console.log(err);
     }
   };
+
+  if (load) {
+    return (
+      <div>
+        {console.log("loading....")}
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div>
