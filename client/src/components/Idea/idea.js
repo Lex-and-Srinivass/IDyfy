@@ -278,7 +278,7 @@ const Idea = () => {
               className="btn-sm pl-3 pr-3 mb-3 mt-3"
               style={{ backgroundColor: "#840FCC", color: "white" }}
             >
-              #Tags# :
+              #Tags :
             </button>
           </div>
           <div className="col-md-2 p-3 mt-3 ">
@@ -289,14 +289,21 @@ const Idea = () => {
             ))}
           </div>
         </div>
-        <div className="row justify-content-center">
-          <div className="col-md-4">
+        <div className="row">
+          <div className="col-md-2 mt-3">
             <button
               className="btn-sm pl-3 pr-3 mb-3 mt-3"
               style={{ backgroundColor: "#840FCC", color: "white" }}
             >
-              Upload Files
+              Uploaded Documents :
             </button>
+          </div>
+          <div className="col-md-2 p-3 mt-3 ">
+            {idea.documents.map((doc) => (
+              <a className="m-3" style={{ color: "white" }} href="/">
+                {console.log(doc)}
+              </a>
+            ))}
           </div>
         </div>
         <div className="row justify-content-center">
