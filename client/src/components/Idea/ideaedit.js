@@ -9,6 +9,7 @@ import authHeader from "../../services/auth-header";
 import { useLocation } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import { useHistory } from "react-router-dom";
+import Loader from "../Loader/loader";
 
 const EditIdea = () => {
   const loc = useLocation();
@@ -18,6 +19,7 @@ const EditIdea = () => {
   const [id, setId] = useState(loc.state.idea._id);
   const [description, setDescription] = useState(loc.state.idea.description);
   const history = useHistory();
+  const [load, setLoad] = useState(false);
 
   var win_width = window.innerWidth;
   var style_width;
@@ -75,6 +77,7 @@ const EditIdea = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoad(true);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("title", title);
@@ -95,6 +98,7 @@ const EditIdea = () => {
         setDescription("");
         setTags([]);
         // console.log("idea updated sucessfully");
+        setLoad(false);
         history.push(`/idea/${id}`);
       } else {
         console.log("some error occured");
@@ -103,6 +107,14 @@ const EditIdea = () => {
       console.log(err);
     }
   };
+  if (load) {
+    return (
+      <div>
+        {console.log("loading....")}
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div>
