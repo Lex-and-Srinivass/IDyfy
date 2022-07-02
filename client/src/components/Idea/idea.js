@@ -299,11 +299,22 @@ const Idea = () => {
             </button>
           </div>
           <div className="col-md-2 p-3 mt-3 ">
-            {idea.documents.map((doc) => (
-              <a className="m-3" style={{ color: "white" }} href="/">
+            {idea.documents[0]
+              ? Object.keys(idea.documents[0]).map((doc) => (
+                  <a
+                    className="m-3"
+                    style={{ color: "white" }}
+                    href={`https://idyfy.tech/file/${idea.documents[0][doc]}`}
+                    target="_blank"
+                  >
+                    {console.log(doc)}
+                    {doc}
+                  </a>
+                ))
+              : ""}
+            {/* <a className="m-3" style={{ color: "white" }} href="/">
                 {console.log(doc)}
-              </a>
-            ))}
+              </a> */}
           </div>
         </div>
         <div className="row justify-content-center">
@@ -321,6 +332,7 @@ const Idea = () => {
             >
               View Graph
             </Link>
+            {/* {console.log("times")} */}
           </div>
         </div>
         {canEdit ? (

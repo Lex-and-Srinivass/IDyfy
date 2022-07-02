@@ -60,17 +60,23 @@ app.get("/file/:filename", async (req, res) => {
       });
     } else {
       const file = await gfs.files.findOne({ filename: req.params.filename });
-      console.log(file);
+      // console.log(file);
       if (!file) {
-        return next(new ErrorResponse("Not found", 404));
+        // return new ErrorResponse("Not found", 404);
+        res.status(404).json({
+          success: false,
+          error: `File not found`,
+        });
+        // res.send(404);
+      } else {
+        const readStream = gfs.createReadStream(file.filename);
+        console.log("here");
+        readStream.pipe(res);
       }
-      const readStream = gfs.createReadStream(file.filename);
-      console.log("here");
-      readStream.pipe(res);
     }
   } catch (error) {
     console.log(error);
-    return next(new ErrorResponse("Oops Something went wrong!", 500));
+    return new ErrorResponse("Oops Something went wrong!", 500);
   }
 });
 

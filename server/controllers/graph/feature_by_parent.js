@@ -254,7 +254,7 @@ exports.fetch_features_by_parent = async (req, res, next) => {
 
       for await (const feature of results) {
         // console.log(feature);
-        if (version == 0 && feature.available == undefined) {
+        if (version == 0 && feature.available == (undefined || null)) {
           continue;
         }
         if (
