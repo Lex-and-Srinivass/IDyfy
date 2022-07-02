@@ -299,19 +299,26 @@ const Idea = () => {
             </button>
           </div>
           <div className="col-md-2 p-3 mt-3 ">
-            {idea.documents[0]
-              ? Object.keys(idea.documents[0]).map((doc) => (
+            {/* {console.log(idea.documents[0])} */}
+            {idea.documents[0] ? (
+              Object.keys(idea.documents[0]).length === 0 ? (
+                <span style={{ color: "white" }}>No documents uploaded</span>
+              ) : (
+                Object.keys(idea.documents[0]).map((doc) => (
                   <a
                     className="m-3"
                     style={{ color: "white" }}
                     href={`https://idyfy.tech/file/${idea.documents[0][doc]}`}
                     target="_blank"
                   >
-                    {console.log(doc)}
+                    {/* {console.log(doc)} */}
                     {doc}
                   </a>
                 ))
-              : ""}
+              )
+            ) : (
+              ""
+            )}
             {/* <a className="m-3" style={{ color: "white" }} href="/">
                 {console.log(doc)}
               </a> */}
