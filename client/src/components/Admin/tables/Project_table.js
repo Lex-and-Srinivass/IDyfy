@@ -56,7 +56,7 @@ const Project_table = () => {
         headers: authHeader(),
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         notify1();
       })
       .catch((err) => {
@@ -73,7 +73,7 @@ const Project_table = () => {
         headers: authHeader(),
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         notify2();
         fetchIdea();
       })

@@ -18,9 +18,15 @@
     "mongoose": "5.13.7",
     "multer": "1.4.3",
     "multer-gridfs-storage": "5.0.2",
+<<<<<<< HEAD
     "nodemailer": "^6.7.5",
     "nodemon": "^2.0.16",
     "sib-api-v3-sdk": "^8.2.1",
     "yarn": "^1.22.17"
+=======
+    "nodemailer": "^6.7.6",
+    "sib-api-v3-sdk": "^8.4.0",
+    "yarn": "^1.22.19"
+>>>>>>> 19ccec0c64fb79d821e1f5f8a989f77e6d9e01b7
   }
 }

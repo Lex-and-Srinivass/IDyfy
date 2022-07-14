@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, version } from "react";
 import Graph from "./graph";
 import { useParams } from "react-router-dom";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -11,10 +11,10 @@ const Graph_body = () => {
   const [Version, SetVersion] = useState(0);
   const [MAxVersion, SetMaxVersion] = useState("null");
   const [Whosegraph, SetWhosegraph] = useState("null");
-  const [Edit, SetEdit] = useState(false);
+  const [Edit, SetEdit] = useState(true);
   const [Contributers, SetContributers] = useState();
   const [Heighest, SetHeighest] = useState();
-
+  const [canPull, SetcanPull] = useState(true);
   const { idea_id } = useParams();
   const canIEdit = (a) => {
     SetEdit(a);
@@ -33,7 +33,7 @@ const Graph_body = () => {
       })
       .then(
         (res) => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.success == true) {
             notify2();
           } else {
@@ -78,8 +78,17 @@ const Graph_body = () => {
           SetMaxVersion(res.data.highest_contributor.latest_version);
           SetWhosegraph(res.data.highest_contributor._id);
           SetContributers(res.data.contributor_names);
-          // console.log(res.data.contributor_names);
           SetHeighest(res.data.highest_contributor);
+          // console.log(res.data);
+          res.data.contributor_names.map((contri, idx) => {
+            if (contri._id == res.data.id) {
+              // Whosegraph = res.data.id;
+              SetMaxVersion(res.data.your_latest_version);
+              SetWhosegraph(res.data.id);
+              // console.log("hello");
+              SetcanPull(false);
+            }
+          });
         },
         (err) => {
           //
@@ -97,6 +106,7 @@ const Graph_body = () => {
       )
       .then(
         (res) => {
+          // console.log(res.data);
           SetMaxVersion(res.data.latest_version);
         },
         (err) => {
@@ -175,13 +185,19 @@ const Graph_body = () => {
           </div>
           <div className="col-sm-4 col-lg-2 col-4 mt-2">
             {Edit ? (
-              <button className="btn btn-secondary" onClick={createVersion}>
-                Create Version
-              </button>
-            ) : (
+              Version == 0 ? (
+                <button className="btn btn-secondary" onClick={createVersion}>
+                  Create Version
+                </button>
+              ) : (
+                <></>
+              )
+            ) : canPull ? (
               <button className="btn btn-secondary" onClick={pullIdea}>
                 Pull Idea
               </button>
+            ) : (
+              <></>
             )}
           </div>
         </div>

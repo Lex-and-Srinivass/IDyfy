@@ -36,7 +36,7 @@ const Graph = (props) => {
   };
 
   const Clicked = (p) => {
-    console.log("Clicked on item " + p);
+    // console.log("Clicked on item " + p);
     TreeData.map((item) => {
       if (item._id == p) {
         if (item.show === false) {
@@ -84,7 +84,7 @@ const Graph = (props) => {
     if (TreeData) {
       if (TreeData[0].show == "nothing") {
         TreeData[0].show = false;
-        console.log("ew");
+
         localStorage.setItem("idea", JSON.stringify(TreeData));
       }
     }
@@ -125,7 +125,7 @@ const Graph = (props) => {
     let svg = document.getElementById("tree__svg-container__svg");
     // console.log(TreeData);
     generatepath();
-    console.log(allLinks);
+    // console.log(allLinks);
     svg.innerHTML = "";
     for (let i = 0; allLinks.length > i; i++) {
       path();
@@ -245,62 +245,61 @@ const Graph = (props) => {
   }, [TreeData]);
 
   useEffect(async () => {
-    console.log("rerendered");
-    const idea = JSON.parse(localStorage.getItem("idea"));
-    const id = localStorage.getItem("whose_id");
-    const ver = JSON.parse(localStorage.getItem("version"));
-    console.log(ver, Version);
-    // also check user_id == whosegraph
-    if (
-      (idea ? idea[0]._id : <></>) === idea_id &&
-      (id ? id : <></>) == Whosegraph &&
-      (ver ? ver : <></>) == Version
-    ) {
-      console.log("asa");
+    // console.log("rerendered");
+    // const idea = JSON.parse(localStorage.getItem("idea"));
+    // const id = localStorage.getItem("whose_id");
+    // const ver = JSON.parse(localStorage.getItem("version"));
+    // console.log(ver, Version);
+    // // also check user_id == whosegraph
+    // if (
+    //   (idea ? idea[0]._id : <></>) === idea_id &&
+    //   (id ? id : <></>) == Whosegraph &&
+    //   (ver ? ver : <></>) == Version
+    // ) {
+    //   console.log("asa");
+    //   SetTreeData(JSON.parse(localStorage.getItem("idea")));
 
-      SetTreeData(JSON.parse(localStorage.getItem("idea")));
+    //   if (idea[0].canEdit == true) {
+    //     props.canIEdit(true);
+    //     SetEdit(true);
+    //   } else {
+    //     props.canIEdit(false);
+    //     SetEdit(false);
+    //   }
+    // } else {
+    //   console.log("na");
 
-      if (idea[0].canEdit == true) {
-        props.canIEdit(true);
-        SetEdit(true);
-      } else {
-        props.canIEdit(false);
-        SetEdit(false);
-      }
-    } else {
-      console.log("na");
-
-      try {
-        await axios
-          .get(
-            `/api/feature/features-by-parent?idea_id=${idea_id}&version=${Version}&whosegraph=${Whosegraph}`,
-            {
-              headers: authHeader(),
+    try {
+      await axios
+        .get(
+          `/api/feature/features-by-parent?idea_id=${idea_id}&version=${Version}&whosegraph=${Whosegraph}`,
+          {
+            headers: authHeader(),
+          }
+        )
+        .then(
+          (res) => {
+            SetTreeData(res.data.features);
+            // console.log(res.data.features);
+            if (res.data.features[0].canEdit == true) {
+              props.canIEdit(true);
+              SetEdit(true);
+            } else {
+              props.canIEdit(false);
+              SetEdit(false);
             }
-          )
-          .then(
-            (res) => {
-              SetTreeData(res.data.features);
-              // console.log(res.data.features);
-              if (res.data.features[0].canEdit == true) {
-                props.canIEdit(true);
-                SetEdit(true);
-              } else {
-                props.canIEdit(false);
-                SetEdit(false);
-              }
-              localStorage.setItem("idea", JSON.stringify(res.data.features));
-              localStorage.setItem("whose_id", res.data.whose_id);
-              localStorage.setItem("version", res.data.version);
-            },
-            (err) => {
-              console.log(err);
-            }
-          );
-      } catch (e) {
-        console.log(e);
-      }
+            localStorage.setItem("idea", JSON.stringify(res.data.features));
+            localStorage.setItem("whose_id", res.data.whose_id);
+            localStorage.setItem("version", res.data.version);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    } catch (e) {
+      console.log(e);
     }
+    // }
   }, [Version, Whosegraph]);
   return (
     // <div style={{ height: window.innerHeight, width: window.innerWidth }}>
@@ -328,20 +327,24 @@ const Graph = (props) => {
                 >
                   <li>
                     <Link className="dropdown-item" to={"../idea/" + idea_id}>
-                      {Edit ? <>Edit</> : <>View</>}
+                      {Edit ? Version == 0 ? <>Edit</> : <>View</> : <>View</>}
                     </Link>
                   </li>
 
                   {Edit ? (
-                    <li>
-                      <Link
-                        className="dropdown-item"
-                        to={"/createFeature/" + idea_id + "/" + idea_id}
-                        onClick={handleClick}
-                      >
-                        Add Child
-                      </Link>
-                    </li>
+                    Version == 0 ? (
+                      <li>
+                        <Link
+                          className="dropdown-item"
+                          to={"/createFeature/" + idea_id + "/" + idea_id}
+                          onClick={handleClick}
+                        >
+                          Add Child
+                        </Link>
+                      </li>
+                    ) : (
+                      <></>
+                    )
                   ) : (
                     <></>
                   )}
@@ -381,6 +384,7 @@ const Graph = (props) => {
                 tree={TreeData ? TreeData : []}
                 _id={idea_id}
                 // pathno={1}
+                version={Version}
                 Clicked={Clicked}
                 Edit={Edit}
               />

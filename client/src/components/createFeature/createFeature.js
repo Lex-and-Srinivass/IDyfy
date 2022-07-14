@@ -13,6 +13,15 @@ const CreateFeature = () => {
   const [description, setDescription] = useState("");
   const { idea_id, parent_id } = useParams();
   const history = useHistory();
+
+  var win_width = window.innerWidth;
+  var style_width;
+  if (win_width < 500) {
+    style_width = "90%";
+  } else {
+    style_width = "60%";
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -106,7 +115,7 @@ const CreateFeature = () => {
                 apiKey="krw1cp6qqs9hj1oedlcjumsizty01tq1ksvpxkn9d94pr3qj"
                 init={{
                   height: 300,
-                  width: 1000,
+                  width: "100%",
                   menubar: true,
                   plugins: [
                     "advlist autolink lists link image charmap print preview anchor",

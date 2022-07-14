@@ -28,8 +28,12 @@ const Dashboard = () => {
         setCount_ideas(res.data.count_ideas);
         setCount_users(res.data.count_users);
         setCount_comments(res.data.count_comments);
+<<<<<<< HEAD
         setdata(res.data.data);
         //console.log((res.data.data));
+=======
+        // console.log(res.data);
+>>>>>>> 19ccec0c64fb79d821e1f5f8a989f77e6d9e01b7
       })
       .catch((err) => console.log(err));
   };
@@ -47,6 +51,7 @@ const Dashboard = () => {
   //))
 
   // console.log(count_ideas);
+<<<<<<< HEAD
   console.log(Object.keys(getdata));
   
   console.log(Object.values(getdata));
@@ -54,9 +59,49 @@ const Dashboard = () => {
   var data = Object.values(getdata);
   
   const options = { fillColor: '#FFFFFF', strokeColor: '#0000FF', };
+=======
+
+  const data = React.useMemo(
+    () => [
+      {
+        label: "Series 1",
+        data: [
+          { x: 1, y: 10 },
+          { x: 2, y: 10 },
+          { x: 3, y: 10 },
+        ],
+      },
+      {
+        label: "Series 2",
+        data: [
+          { x: 1, y: 10 },
+          { x: 2, y: 10 },
+          { x: 3, y: 10 },
+        ],
+      },
+      {
+        label: "Series 3",
+        data: [
+          { x: 1, y: 10 },
+          { x: 2, y: 10 },
+          { x: 3, y: 10 },
+        ],
+      },
+    ],
+    []
+  );
+
+  const axes = React.useMemo(
+    () => [
+      { primary: true, type: "linear", position: "bottom" },
+      { type: "linear", position: "left" },
+    ],
+    []
+  );
+>>>>>>> 19ccec0c64fb79d821e1f5f8a989f77e6d9e01b7
 
   return (
-    <div style={{width: "100%"}}>
+    <div style={{ width: "100%" }}>
       <div className=" my-5">
         <div className="my-3">
           <Navbar />
@@ -83,9 +128,15 @@ const Dashboard = () => {
                               color: "white",
                             }}
                           >
-                            Total Users 
+                            Total Users
                           </h1>
-                          <h2 className="mt-2 ml-4" style={{ color:"white",fontSize: "1.7rem" }}> {count_users}</h2>
+                          <h2
+                            className="mt-2 ml-4"
+                            style={{ color: "white", fontSize: "1.7rem" }}
+                          >
+                            {" "}
+                            {count_users}
+                          </h2>
                         </div>
                       </div>
                       <div className="col-4">
@@ -121,9 +172,15 @@ const Dashboard = () => {
                               color: "white",
                             }}
                           >
-                            Total Projects 
+                            Total Projects
                           </h1>
-                          <h2 className="mt-2 ml-4" style={{ color:"white",fontSize: "1.7rem" }}> {count_ideas}</h2>
+                          <h2
+                            className="mt-2 ml-4"
+                            style={{ color: "white", fontSize: "1.7rem" }}
+                          >
+                            {" "}
+                            {count_ideas}
+                          </h2>
                         </div>
                       </div>
                       <div className="col-4">
@@ -153,11 +210,21 @@ const Dashboard = () => {
                         <div style={{ height: "5rem" }}>
                           <h1
                             className="ml-3"
-                            style={{ fontSize: "1.6rem", fontWeight: "bold",color:"white" }}
+                            style={{
+                              fontSize: "1.6rem",
+                              fontWeight: "bold",
+                              color: "white",
+                            }}
                           >
-                            Total Activities 
+                            Total Activities
                           </h1>
-                          <h2 className="mt-2 ml-4" style={{ color:"white",fontSize: "1.5rem" }}> {count_comments}</h2>
+                          <h2
+                            className="mt-2 ml-4"
+                            style={{ color: "white", fontSize: "1.5rem" }}
+                          >
+                            {" "}
+                            {count_comments}
+                          </h2>
                         </div>
                       </div>
                       <div className="col-4">

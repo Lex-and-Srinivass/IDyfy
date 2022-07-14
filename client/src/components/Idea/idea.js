@@ -9,6 +9,8 @@ import Footer from "../Footer/footer";
 import { Link } from "react-router-dom";
 import Loader from "../Loader/loader";
 import { toast } from "react-toastify";
+import Comment from "../../components/comment/comment";
+
 const Idea = () => {
   const notify5 = () => toast.success("Idea Liked!");
   const notify6 = () => toast.success("Idea Unliked!");
@@ -21,9 +23,41 @@ const Idea = () => {
   const [canEdit, setCanEdit] = useState(false);
   const [isLiked, setActiveliked] = useState();
   var [likes_count, setLikesCount] = useState();
+  const [content, setContent] = useState("");
+  const [load2, setLoad2] = useState(false);
 
   const { id } = useParams();
   const url = "/ideaEdit/";
+  // const { idea_id } = useParams();
+  const handleComment = async (e) => {
+    e.preventDefault();
+    try {
+      let res = await axios({
+        method: "POST",
+        url: "/api/comment/post-comment",
+        headers: authHeader(),
+        data: {
+          idea_id: id,
+          feature_id: null,
+          content: content,
+        },
+      });
+
+      if (res.status === 200) {
+        // console.log("comment sucessfully");
+        setContent("");
+        reloadpage();
+      } else {
+        console.log("some error occured");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const reloadpage = () => {
+    setLoad2(!load2);
+  };
 
   const fetchIdea = () => {
     axios
@@ -37,7 +71,7 @@ const Idea = () => {
         setCanEdit(res.data.can_edit);
         setActiveliked(res.data.idea.liked);
         setLikesCount(res.data.idea.liked_users.length);
-        console.log(res.data);
+        // console.log(res.data);
         setLoad(false);
       })
       .catch((err) => {
@@ -45,6 +79,10 @@ const Idea = () => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    fetchIdea();
+  }, [load2]);
 
   useEffect(() => {
     fetchIdea();
@@ -70,7 +108,7 @@ const Idea = () => {
           })
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify5();
             },
             (err) => {
@@ -91,7 +129,7 @@ const Idea = () => {
           })
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify6();
             },
             (err) => {
@@ -107,7 +145,7 @@ const Idea = () => {
 
   return (
     <div>
-      {console.log(contributors)}
+      {/* {console.log(contributors)} */}
       <div className="relative flex justify-center">
         <div
           className="absolute top-1/3 sm:text-xl md:text-4xl lg:text-6xl"
@@ -240,7 +278,7 @@ const Idea = () => {
               className="btn-sm pl-3 pr-3 mb-3 mt-3"
               style={{ backgroundColor: "#840FCC", color: "white" }}
             >
-              #Tags# :
+              #Tags :
             </button>
           </div>
           <div className="col-md-2 p-3 mt-3 ">
@@ -251,14 +289,39 @@ const Idea = () => {
             ))}
           </div>
         </div>
-        <div className="row justify-content-center">
-          <div className="col-md-4">
+        <div className="row">
+          <div className="col-md-2 mt-3">
             <button
               className="btn-sm pl-3 pr-3 mb-3 mt-3"
               style={{ backgroundColor: "#840FCC", color: "white" }}
             >
-              Upload Files
+              Uploaded Documents :
             </button>
+          </div>
+          <div className="col-md-2 p-3 mt-3 ">
+            {/* {console.log(idea.documents[0])} */}
+            {idea.documents[0] ? (
+              Object.keys(idea.documents[0]).length === 0 ? (
+                <span style={{ color: "white" }}>No documents uploaded</span>
+              ) : (
+                Object.keys(idea.documents[0]).map((doc) => (
+                  <a
+                    className="m-3"
+                    style={{ color: "white" }}
+                    href={`https://idyfy.tech/file/${idea.documents[0][doc]}`}
+                    target="_blank"
+                  >
+                    {/* {console.log(doc)} */}
+                    {doc}
+                  </a>
+                ))
+              )
+            ) : (
+              ""
+            )}
+            {/* <a className="m-3" style={{ color: "white" }} href="/">
+                {console.log(doc)}
+              </a> */}
           </div>
         </div>
         <div className="row justify-content-center">
@@ -276,6 +339,7 @@ const Idea = () => {
             >
               View Graph
             </Link>
+            {/* {console.log("times")} */}
           </div>
         </div>
         {canEdit ? (
@@ -305,6 +369,36 @@ const Idea = () => {
         ) : (
           <div></div>
         )}
+        <div className="mt-10 row">
+          <div className="col-6">
+            <Comment comments={comments} />
+          </div>
+
+          <div className="col-6">
+            <div className="row">
+              <div className="flex justify-center mt-3 mx-3">
+                <input
+                  type="text"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="form-control form_box"
+                  placeholder="Enter Comment"
+                />
+              </div>
+            </div>
+            <div className="mt-6 row">
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  onClick={handleComment}
+                  className="mr-2 h-10 mb-10 btn button"
+                >
+                  Add Comment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>

@@ -41,7 +41,7 @@ const Profile = () => {
           setUser(res.data.user);
           setIdeas(res.data.ideas);
           setEdit(res.data.can_edit);
-          console.log(res.data);
+          // console.log(res.data);
           setLoad(false);
         })
         .catch((err) => console.log(err));
@@ -54,7 +54,7 @@ const Profile = () => {
           setUser(res.data.user);
           setIdeas(res.data.ideas);
           setEdit(res.data.can_edit);
-          console.log(res.data);
+          // console.log(res.data);
           setLoad(false);
         })
         .catch((err) => console.log(err));

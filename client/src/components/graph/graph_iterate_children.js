@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./lib/treestyle.css";
+import { toast } from "react-toastify";
+
+import axios from "axios";
+import authHeader from "../../services/auth-header";
 const Graph_iterate_children = (props) => {
   let TreeData = props.tree,
     cardkey = "",
     Edit = props.Edit,
-    //   strokeWidth = "5px",
-    //   strokeColor = "#000000",
+    // strokeWidth = "",
+    strokeColor = "",
     _id = props._id;
-
+  let Version = props.version;
   const handleClick = (item) => {
     console.log(item);
     if (item.show == "nothing") {
@@ -17,6 +21,46 @@ const Graph_iterate_children = (props) => {
       localStorage.setItem("idea", JSON.stringify(TreeData));
     }
   };
+
+  const DeleteFeature = async (id, pid) => {
+    await axios
+      .get(`/api/feature/delete-feature?idea_id=${TreeData[0]._id}&id=${id}`, {
+        headers: authHeader(),
+      })
+      .then((res) => {
+        if (res.data.success == true) {
+          toast.success("Deleted " + res.data.deleted_feature.title);
+          props.Clicked(pid);
+        }
+      });
+  };
+
+  const color = (item) => {
+    {
+      /* no change */
+    }
+    {
+      item.updated == 0 && (strokeColor = "");
+    }
+    {
+      /* updated feature */
+    }
+    {
+      item.updated == 1 && (strokeColor = "border border-5 border-warning");
+    }
+    {
+      /* new feature */
+    }
+    {
+      item.updated == 2 && (strokeColor = "border border-5 border-success");
+    }
+    {
+      item.updated == 3 && (strokeColor = "border border-5 border-danger");
+    }
+
+    return strokeColor;
+  };
+
   return (
     // <div className="tree__container__step">
     <>
@@ -28,10 +72,8 @@ const Graph_iterate_children = (props) => {
                 className="tree__container__step__card dropdown"
                 id={item._id}
               >
-                {/* {(cardkey = "card_" + item.id)} */}
                 <p
-                  // id={cardkey}
-                  className="tree__container__step__card__p"
+                  className={`tree__container__step__card__p +${color(item)}`}
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
@@ -43,36 +85,63 @@ const Graph_iterate_children = (props) => {
                       className="dropdown-item"
                       to={"../feature/" + TreeData[0]._id + "/" + item._id}
                     >
-                      {Edit ? <>Edit</> : <>View</>}
+                      {Edit ? (
+                        localStorage.getItem("version") == 0 ? (
+                          <>Edit</>
+                        ) : (
+                          <>View</>
+                        )
+                      ) : (
+                        <>View</>
+                      )}
                     </Link>
                   </li>
                   {Edit ? (
-                    <>
-                      <li>
-                        <Link
-                          className="dropdown-item"
-                          to={
-                            "/createFeature/" + TreeData[0]._id + "/" + item._id
-                          }
-                          onClick={() => handleClick(item)}
-                        >
-                          Add Child
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          className="dropdown-item"
-                          to={
-                            "/createFeature/" +
-                            TreeData[0]._id +
-                            "/" +
-                            item.parent_id
-                          }
-                        >
-                          Add Sibling
-                        </Link>
-                      </li>
-                    </>
+                    localStorage.getItem("version") == 0 ? (
+                      <>
+                        <li>
+                          <Link
+                            className="dropdown-item"
+                            to={
+                              "/createFeature/" +
+                              TreeData[0]._id +
+                              "/" +
+                              item._id
+                            }
+                            onClick={() => handleClick(item)}
+                          >
+                            Add Child
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            className="dropdown-item"
+                            to={
+                              "/createFeature/" +
+                              TreeData[0]._id +
+                              "/" +
+                              item.parent_id
+                            }
+                          >
+                            Add Sibling
+                          </Link>
+                        </li>
+                        {item.leaf ? (
+                          <li
+                            className="dropdown-item"
+                            onClick={() => {
+                              DeleteFeature(item._id, item.parent_id);
+                            }}
+                          >
+                            Delete feature
+                          </li>
+                        ) : (
+                          <></>
+                        )}{" "}
+                      </>
+                    ) : (
+                      <></>
+                    )
                   ) : (
                     <></>
                   )}
@@ -98,6 +167,7 @@ const Graph_iterate_children = (props) => {
               <Graph_iterate_children
                 tree={TreeData}
                 _id={item._id}
+                Edit={Edit}
                 Clicked={props.Clicked}
               />
             </div>

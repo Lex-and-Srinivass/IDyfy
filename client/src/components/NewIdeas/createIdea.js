@@ -15,6 +15,14 @@ const CreateIdea = () => {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState([]);
 
+  var win_width = window.innerWidth;
+  var style_width;
+  if (win_width < 500) {
+    style_width = "90%";
+  } else {
+    style_width = "60%";
+  }
+
   const notify1 = () => toast.success("Idea Created Successfully");
   const history = useHistory();
 
@@ -42,7 +50,7 @@ const CreateIdea = () => {
         setDescription("");
         setTags([]);
         //tags not going from the field but anyways we are redirecting to idea page so no issues
-        console.log("idea created sucessfully");
+        // console.log("idea created sucessfully");
         history.push("/idea/" + res.data.idea._id.toString());
       } else {
         console.log("some error occured");
@@ -61,7 +69,7 @@ const CreateIdea = () => {
         className=" m-auto container formsize"
         style={{
           backgroundColor: "#b6aaf3",
-          width: "60%",
+          width: style_width,
           borderRadius: "20px",
         }}
       >
@@ -105,7 +113,7 @@ const CreateIdea = () => {
                 apiKey="krw1cp6qqs9hj1oedlcjumsizty01tq1ksvpxkn9d94pr3qj"
                 init={{
                   height: 300,
-                  width: 1000,
+                  width: "100%",
                   menubar: true,
                   plugins: [
                     "advlist autolink lists link image charmap print preview anchor",

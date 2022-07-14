@@ -41,7 +41,7 @@ const FeedTile = (props) => {
           })
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify1();
             },
             (err) => {
@@ -65,7 +65,7 @@ const FeedTile = (props) => {
           )
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify2();
             },
             (err) => {
@@ -91,7 +91,7 @@ const FeedTile = (props) => {
           })
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify5();
             },
             (err) => {
@@ -115,7 +115,7 @@ const FeedTile = (props) => {
           )
           .then(
             (res) => {
-              console.log(res);
+              // console.log(res);
               notify6();
             },
             (err) => {

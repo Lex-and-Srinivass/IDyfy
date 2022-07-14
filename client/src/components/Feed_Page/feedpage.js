@@ -25,7 +25,7 @@ const FeedPage = () => {
             if (skip !== 0) {
               setIdeas([...ideas, ...res.data.ideas]);
             }
-            console.log(res.data.ideas);
+            // console.log(res.data.ideas);
             setFeedLength(res.data.ideas.length);
             setLoad(false);
             // console.log(ideas);
