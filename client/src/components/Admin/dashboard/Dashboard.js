@@ -1,12 +1,11 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Chart } from "react-charts";
-//import { Bar } from "react-charts";
 import authHeader from "../auth/auth-header";
 import Navbar from "../Navbar/Navbar";
 import "../dashboard/Dashboard.css";
 import axios from "axios";
+import Histogram from 'react-chart-histogram';
 
 const Dashboard = () => {
   const [ideas, setIdeas] = useState();
@@ -16,6 +15,7 @@ const Dashboard = () => {
   const [count_ideas, setCount_ideas] = useState([]);
   const [count_users, setCount_users] = useState([]);
   const [count_comments, setCount_comments] = useState([]);
+  const [getdata,setdata] = useState([]); 
 
   const fetchIdea = async () => {
     await axios
@@ -28,7 +28,8 @@ const Dashboard = () => {
         setCount_ideas(res.data.count_ideas);
         setCount_users(res.data.count_users);
         setCount_comments(res.data.count_comments);
-        console.log(res.data);
+        setdata(res.data.data);
+        //console.log((res.data.data));
       })
       .catch((err) => console.log(err));
   };
@@ -39,39 +40,20 @@ const Dashboard = () => {
   //console.log(1);
   // console.log(ideas);
   // console.log(users);
+  // id
+  //console.log(users);
   // idea.map((ide, index) => (
   //console.log(ide.title)
   //))
 
   // console.log(count_ideas);
-
-  const data = React.useMemo(
-    () => [
-      {
-        label: 'Series 1',
-        data: [{ x: 1, y: 10 }, { x: 2, y: 10 }, { x: 3, y: 10 }]
-      },
-      {
-        label: 'Series 2',
-        data: [{ x: 1, y: 10 }, { x: 2, y: 10 }, { x: 3, y: 10 }]
-      },
-      {
-        label: 'Series 3',
-        data: [{ x: 1, y: 10 }, { x: 2, y: 10 }, { x: 3, y: 10 }]
-      }
-    ],
-    []
-  );
-
-  const axes = React.useMemo(
-    () => [
-      { primary: true, type: "linear", position: "bottom" },
-      { type: "linear", position: "left" },
-    ],
-    []
-  );
-
+  console.log(Object.keys(getdata));
   
+  console.log(Object.values(getdata));
+  var labels= Object.keys(getdata);
+  var data = Object.values(getdata);
+  
+  const options = { fillColor: '#FFFFFF', strokeColor: '#0000FF', };
 
   return (
     <div style={{width: "100%"}}>
@@ -204,7 +186,7 @@ const Dashboard = () => {
                 <div className="row mx-4 my-5">
                   <div className="col-md my-3">
                     <div
-                      className="p-4 shadow rounded bg-white"
+                      className="p-4 shadow rounded bg-white overflow-x-scroll"
                       style={{ background: "bg-dark" }}
                     >
                       <h1
@@ -218,8 +200,9 @@ const Dashboard = () => {
                         Traffic
                       </h1>
                       <center>
-                        <div style={{ width: "90%", height: "21rem" }}>
-                          <Chart data={data} axes={axes} />
+                        <div style={{ width: "90%", height: "21rem" }} >
+                          {/* <Chart data={data} axes={axes} /> */}
+                          <Histogram  xLabels={labels}  yValues={data} width='1000' height='300' options={options}/>
                         </div>
                       </center>
                     </div>

@@ -44,13 +44,40 @@ exports.get_details = async (req, res, next) => {
       })
       .limit(10);
 
-    var igraph = await Idea.find({},{
+    var igraph = await User.find({},{
+      name:1,
+      events:1,
       date:1,
     });
+    //console.log(igraph);
+    let year,month,date ;
+    let data1= [];
+    for await (var user of igraph){
+       for await (var i of user.events){
+        month = i.time.getUTCMonth();
+        year = i.time.getUTCFullYear();
+        date = year.toString() + "-" + month.toString();
+        data1.push(date);
+     }
+    }
+    var unique = [...new Set(data1)];
+    var data = {};
 
-    // for await (var i of igraph){
-    //   console.log(i.getFullYear())
-    // }
+    for await (var i of unique){
+      data[i] = 0;
+    }
+
+    for await (var i of unique){
+      for await (var j of data1){
+        if (i == j){
+          data[i]++;
+        }
+      }
+    }
+
+    
+
+
 
     res.status(200).json({
       success: true,
@@ -59,6 +86,8 @@ exports.get_details = async (req, res, next) => {
       count_comments,
       active_ideas,
       active_users,
+      igraph,
+      data
     });
   } catch (err) {
     console.log(err);
