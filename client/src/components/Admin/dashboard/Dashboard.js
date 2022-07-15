@@ -28,12 +28,8 @@ const Dashboard = () => {
         setCount_ideas(res.data.count_ideas);
         setCount_users(res.data.count_users);
         setCount_comments(res.data.count_comments);
-<<<<<<< HEAD
         setdata(res.data.data);
-        //console.log((res.data.data));
-=======
-        // console.log(res.data);
->>>>>>> 19ccec0c64fb79d821e1f5f8a989f77e6d9e01b7
+        console.log((res.data.active_ideas));
       })
       .catch((err) => console.log(err));
   };
@@ -51,7 +47,6 @@ const Dashboard = () => {
   //))
 
   // console.log(count_ideas);
-<<<<<<< HEAD
   console.log(Object.keys(getdata));
   
   console.log(Object.values(getdata));
@@ -59,46 +54,6 @@ const Dashboard = () => {
   var data = Object.values(getdata);
   
   const options = { fillColor: '#FFFFFF', strokeColor: '#0000FF', };
-=======
-
-  const data = React.useMemo(
-    () => [
-      {
-        label: "Series 1",
-        data: [
-          { x: 1, y: 10 },
-          { x: 2, y: 10 },
-          { x: 3, y: 10 },
-        ],
-      },
-      {
-        label: "Series 2",
-        data: [
-          { x: 1, y: 10 },
-          { x: 2, y: 10 },
-          { x: 3, y: 10 },
-        ],
-      },
-      {
-        label: "Series 3",
-        data: [
-          { x: 1, y: 10 },
-          { x: 2, y: 10 },
-          { x: 3, y: 10 },
-        ],
-      },
-    ],
-    []
-  );
-
-  const axes = React.useMemo(
-    () => [
-      { primary: true, type: "linear", position: "bottom" },
-      { type: "linear", position: "left" },
-    ],
-    []
-  );
->>>>>>> 19ccec0c64fb79d821e1f5f8a989f77e6d9e01b7
 
   return (
     <div style={{ width: "100%" }}>

@@ -23,7 +23,7 @@ exports.get_details = async (req, res, next) => {
       }
     )
       .sort({
-        date: -1,
+        liked_users: -1,
       })
       .limit(10);
 
