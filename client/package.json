@@ -13,7 +13,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^14.0.4",
-    "@tinymce/tinymce-react": "^4.0.0",
+    "@tinymce/tinymce-react": "^5.0.0",
     "axios": "^0.26.1",
     "jquery": "^3.6.0",
     "objectFitPolyfill": "^2.3.5",
